@@ -4,10 +4,9 @@ from scipy.stats import linregress
 
 def create_line_best_fit(df, color):
     slope, intercept, r_value, p_value, std_err = linregress(df['Year'], df['CSIRO Adjusted Sea Level'])
-    additional_year = pd.DataFrame({ "Year": 2025 })
-    future_x = pd.concat([df["Year"], additional_year])
-    regression_line = slope * future_x + intercept
-    plt.plot(df["Year"], regression_line, color=color, label='Regression line')
+    x_values = pd.Series([i for i in range(df["Year"].min(), 2051)])
+    regression_line = slope * x_values + intercept
+    plt.plot(x_values, regression_line, color=color, label='Regression line')
 
 def draw_plot():
     # Read data from file
